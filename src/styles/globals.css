@@ -24,6 +24,7 @@
 @import './themes/ios/dark.css';
 @import './themes/minimal/light.css';
 @import './themes/minimal/dark.css';
+@import './additional-styles/animations.css';  /* Add this line */
 
 /* Second: Tailwind directives */
 @tailwind base;
@@ -75,12 +76,103 @@
     --switch-radius: 9999px;
     --tabs-radius: var(--radius-sm);
     --textarea-radius: var(--radius-sm);
-        
+    
+    /* Add animation tokens */
+    --animate-gradient: gradient 6s linear infinite;
+    --animate-shine: shine 5s ease-in-out 500ms infinite;
   }
 
   body {
     color: hsl(var(--foreground));
     background: hsl(var(--background));
     font-family: var(--font-sans), system-ui, sans-serif;
+  }
+
+  /* Add keyframes for landing page animations */
+  @keyframes gradient {
+    0% { background-position: 0% center; }
+    100% { background-position: 200% center; }
+  }
+
+  @keyframes shine {
+    0% {
+      top: 0;
+      transform: scaleY(5);
+      opacity: 0;
+    }
+    10% { opacity: 0.8; }
+    20% {
+      top: 100%;
+      transform: scaleY(10);
+      opacity: 0;
+    }
+    100% {
+      top: 100%;
+      transform: scaleY(1);
+      opacity: 0;
+    }
+  }
+}
+
+@plugin "@tailwindcss/forms" {
+  strategy: base;
+}
+
+@theme {
+  /* Keep existing font definitions */
+  --font-inter: var(--font-inter), sans-serif;
+  --font-nacelle: var(--font-nacelle), sans-serif;
+
+  /* Keep existing text styles */
+  --text-xs: 0.8125rem;
+  /* ... rest of your text styles ... */
+
+  /* Update/add color theme variables */
+  --background: 222 47% 11%;    /* Rich blue-black */
+  --foreground: 210 40% 98%;
+  --primary: 217 91% 60%;      /* Bright blue accent */
+  --secondary: 215 20.2% 65.1%;
+  --accent: 217 91% 60%;
+
+  /* Keep your existing animation variables */
+  --animate-shine: shine 5s ease-in-out 500ms infinite;
+  --animate-gradient: gradient 6s linear infinite;
+
+  /* Keep your existing keyframes */
+  @keyframes shine {
+    0% {
+      top: 0;
+      transform: scaleY(5);
+      opacity: 0;
+    }
+    10% {
+      opacity: 0.8;
+    }
+    20% {
+      top: 100%;
+      transform: scaleY(10);
+      opacity: 0;
+    }
+    100% {
+      top: 100%;
+      transform: scaleY(1);
+      opacity: 0;
+    }
+  }
+  @keyframes gradient {
+    to {
+      background-position: 200% center;
+    }
+  }
+}
+
+/* Keep your existing base layer */
+@layer base {
+  *,
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
+    border-color: var(--color-gray-200, currentColor);
   }
 }

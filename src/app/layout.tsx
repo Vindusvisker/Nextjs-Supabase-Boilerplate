@@ -20,8 +20,10 @@ const fontMono = FontMono({
 });
 
 export const metadata: Metadata = {
-  title: "SaaS Boilerplate",
-  description: "A modern SaaS starter kit",
+  title: "Solvify Boilerplate - AI Powered SaaS Platform",
+  description:
+    "Experience the future of AI-powered software development with Solvify.",
+  keywords: "AI, SaaS, Software Development, Automation",
 };
 
 export default function RootLayout({
@@ -32,7 +34,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body
-        className={`${fontSans.variable} ${fontMono.variable} antialiased min-h-screen flex flex-col`}
+        className={`${fontSans.variable} ${fontMono.variable} antialiased min-h-screen flex flex-col bg-background text-foreground`}
       >
         <TooltipProvider>
           <ThemeProvider defaultTheme="default" defaultMode="system">
@@ -47,7 +49,7 @@ export default function RootLayout({
             >
               <Navbar />
             </Suspense>
-            <main className="flex-1">{children}</main>
+            <main className="flex-1 flex flex-col">{children}</main>
             <Toaster
               position="top-right"
               toastOptions={{

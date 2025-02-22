@@ -1,11 +1,11 @@
 :root[data-theme="default"].dark {
-  --background: 222 47% 11%;   /* #1F2937 Dark Background */
+  --background: 222 47% 11%;    /* #0F172A - Slate 950 for that blue-black look */
   --foreground: 0 0% 98%;
   
-  --card: 222 47% 11%;
+  --card: 222 47% 9%;          /* Slightly darker for cards */
   --card-foreground: 0 0% 98%;
   
-  --popover: 222 47% 11%;
+  --popover: 222 47% 9%;
   --popover-foreground: 0 0% 98%;
   
   --primary: 217 91% 60%;     /* #3B82F6 Primary Blue */

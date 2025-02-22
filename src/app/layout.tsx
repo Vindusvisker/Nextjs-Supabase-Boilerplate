@@ -1,12 +1,13 @@
 import type { Metadata } from "next";
+import { Suspense } from "react";
 import { Inter as FontSans } from "next/font/google";
 import { JetBrains_Mono as FontMono } from "next/font/google";
 import { Navbar } from "@/components/layout/Navbar";
 import { Toaster } from "sonner";
 import { ThemeProvider } from "@/context/theme/ThemeProvider";
 import "@/styles/globals.css";
-import { ThemeSwitcher } from '@/components/ThemeSwitcher'
-import { TooltipProvider } from '@/components/ui/Tooltip'
+import { ThemeSwitcher } from "@/components/ThemeSwitcher";
+import { TooltipProvider } from "@/components/ui/Tooltip";
 
 const fontSans = FontSans({
   subsets: ["latin"],
@@ -35,17 +36,27 @@ export default function RootLayout({
       >
         <TooltipProvider>
           <ThemeProvider defaultTheme="default" defaultMode="system">
-            <Navbar />
+            <Suspense
+              fallback={
+                <div className="h-16 border-b border-border">
+                  <div className="flex h-16 items-center px-4 max-w-7xl mx-auto">
+                    <div className="animate-pulse h-6 w-32 bg-muted rounded" />
+                  </div>
+                </div>
+              }
+            >
+              <Navbar />
+            </Suspense>
             <main className="flex-1">{children}</main>
-            <Toaster 
+            <Toaster
               position="top-right"
               toastOptions={{
                 style: {
-                  background: 'hsl(var(--background))',
-                  color: 'hsl(var(--foreground))',
-                  border: '1px solid hsl(var(--border))',
+                  background: "hsl(var(--background))",
+                  color: "hsl(var(--foreground))",
+                  border: "1px solid hsl(var(--border))",
                 },
-                className: 'font-sans',
+                className: "font-sans",
               }}
             />
             {/* Theme Switcher - Fixed Position */}

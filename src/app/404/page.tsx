@@ -30,7 +30,7 @@ export default function NotFoundPage() {
   return (
     <Suspense
       fallback={
-        <div className="flex items-center justify-center min-h-[400px]">
+        <div className="flex flex-col items-center justify-center min-h-[400px] text-center">
           <div className="animate-pulse">Loading...</div>
         </div>
       }

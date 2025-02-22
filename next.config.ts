@@ -18,6 +18,10 @@ const nextConfig = {
     ignoreBuildErrors: true,
   },
 
+  output: 'standalone',
+  poweredByHeader: false,
+  reactStrictMode: false,
+
   webpack: (config: WebpackConfig) => {
     config.watchOptions = {
       poll: 1000,

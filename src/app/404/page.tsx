@@ -1,7 +1,10 @@
+"use client";
+
+import { Suspense } from "react";
 import Link from "next/link";
 import { Button } from "@/components/ui/Button";
 
-export default function NotFoundPage() {
+function NotFoundContent() {
   return (
     <div className="flex flex-col items-center justify-center min-h-[400px] text-center">
       <h1 className="text-2xl font-bold text-red-600 mb-4">
@@ -20,5 +23,19 @@ export default function NotFoundPage() {
         </Link>
       </div>
     </div>
+  );
+}
+
+export default function NotFoundPage() {
+  return (
+    <Suspense
+      fallback={
+        <div className="flex items-center justify-center min-h-[400px]">
+          <div className="animate-pulse">Loading...</div>
+        </div>
+      }
+    >
+      <NotFoundContent />
+    </Suspense>
   );
 }

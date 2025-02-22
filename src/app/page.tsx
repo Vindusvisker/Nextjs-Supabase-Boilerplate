@@ -1,35 +1,45 @@
 import Image from "next/image";
-import { redirect } from 'next/navigation'
-import { use } from 'react'
-import { Button } from "@/components/ui/Button"
-import { AlertDialog, AlertDialogTrigger, AlertDialogContent, AlertDialogHeader, AlertDialogTitle, AlertDialogDescription, AlertDialogFooter, AlertDialogCancel, AlertDialogAction } from "@/components/ui/AlertDialog"
+import { redirect } from "next/navigation";
+import { use } from "react";
+import { Button } from "@/components/ui/Button";
+import {
+  AlertDialog,
+  AlertDialogTrigger,
+  AlertDialogContent,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogCancel,
+  AlertDialogAction,
+} from "@/components/ui/AlertDialog";
 
 export default function Home({
-  searchParams
+  searchParams,
 }: {
-  searchParams: { 
-    code?: string    // PKCE auth code
-    invite?: string  // Supabase auth invites
-    token?: string   // Our org invites
-    org?: string
-  }
+  searchParams: {
+    code?: string; // PKCE auth code
+    invite?: string; // Supabase auth invites
+    token?: string; // Our org invites
+    org?: string;
+  };
 }) {
-  const params = use(Promise.resolve(searchParams))
-  
-  // If we have a code (from PKCE flow), redirect to login with all params
+  const params = use(Promise.resolve(searchParams));
+
+  // If we have a code (from PKCE flow), redirect to oauth-callback
   if (params.code) {
     const searchParamsString = new URLSearchParams({
       code: params.code,
       ...(params.invite && { invite: params.invite }), // Keep Supabase invite param
       ...(params.org && { org: params.org }),
     }).toString();
-    
-    redirect(`/auth/login?${searchParamsString}`);
+
+    redirect(`/auth/oauth-callback?${searchParamsString}`);
   }
 
-  // Our custom org invite token handling - updated to use new /invite route
+  // Our custom org invite token handling
   if (params.token) {
-    redirect(`/invite?token=${params.token}`);  // Removed org param as it's included in the invite data
+    redirect(`/invite?token=${params.token}`);
   }
 
   return (
@@ -83,7 +93,7 @@ export default function Home({
         {/* Button Showcase Section */}
         <section className="w-full max-w-4xl mt-12 space-y-8">
           <h2 className="text-xl font-semibold mb-6">Button Components</h2>
-          
+
           <div className="grid gap-8">
             {/* Regular Buttons */}
             <div className="space-y-4">
@@ -122,8 +132,12 @@ export default function Home({
               <div className="bg-gradient-to-r from-blue-500 to-purple-500 p-6 rounded-lg">
                 <div className="flex flex-wrap gap-4">
                   <Button variant="glass">Glass</Button>
-                  <Button variant="glass" size="sm">Small Glass</Button>
-                  <Button variant="glass" size="lg">Large Glass</Button>
+                  <Button variant="glass" size="sm">
+                    Small Glass
+                  </Button>
+                  <Button variant="glass" size="lg">
+                    Large Glass
+                  </Button>
                 </div>
               </div>
             </div>
@@ -132,8 +146,10 @@ export default function Home({
 
         {/* AlertDialog Showcase Section */}
         <section className="w-full max-w-4xl mt-12 space-y-8">
-          <h2 className="text-xl font-semibold mb-6">Alert Dialog Components</h2>
-          
+          <h2 className="text-xl font-semibold mb-6">
+            Alert Dialog Components
+          </h2>
+
           <div className="space-y-4">
             <h3 className="text-sm font-medium">Alert Dialog Variants</h3>
             <div className="flex flex-wrap gap-4">
@@ -146,7 +162,8 @@ export default function Home({
                   <AlertDialogHeader>
                     <AlertDialogTitle>Confirm Action</AlertDialogTitle>
                     <AlertDialogDescription>
-                      Are you sure you want to continue? This action can be undone later.
+                      Are you sure you want to continue? This action can be
+                      undone later.
                     </AlertDialogDescription>
                   </AlertDialogHeader>
                   <AlertDialogFooter>
@@ -169,8 +186,8 @@ export default function Home({
                   <AlertDialogHeader>
                     <AlertDialogTitle>Delete Account</AlertDialogTitle>
                     <AlertDialogDescription>
-                      This will permanently delete your account and remove your data.
-                      This action cannot be undone.
+                      This will permanently delete your account and remove your
+                      data. This action cannot be undone.
                     </AlertDialogDescription>
                   </AlertDialogHeader>
                   <AlertDialogFooter>

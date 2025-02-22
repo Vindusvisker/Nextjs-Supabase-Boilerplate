@@ -24,7 +24,7 @@ function NotFoundContent() {
   );
 }
 
-export default function NotFound() {
+export default function NotFoundPage() {
   return (
     <Suspense fallback={<div>Loading...</div>}>
       <NotFoundContent />

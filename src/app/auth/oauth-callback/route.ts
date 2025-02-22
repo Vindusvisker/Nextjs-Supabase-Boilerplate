@@ -37,10 +37,10 @@ const OAUTH_ERRORS = {
   }
 } as const
 
-function handleError(errorType: keyof typeof OAUTH_ERRORS): NextResponse {
+function handleError(errorType: keyof typeof OAUTH_ERRORS, requestUrl: URL): NextResponse {
   const error = OAUTH_ERRORS[errorType]
   return NextResponse.redirect(
-    new URL(`/auth/error?error=${error.code}`, 'http://localhost:3000'),
+    new URL(`/auth/error?error=${error.code}`, requestUrl.origin),
     { status: error.status }
   )
 }
@@ -66,7 +66,7 @@ export async function GET(request: NextRequest) {
 
   if (!code || !codeVerifier) {
     console.error('Missing code or verifier:', { code, codeVerifier })
-    return handleError('EXCHANGE_FAILED')
+    return handleError('EXCHANGE_FAILED', requestUrl)
   }
 
   // Create response first based on flow type
@@ -96,12 +96,12 @@ export async function GET(request: NextRequest) {
 
   try {
     // Exchange the code for a session
-    const { data: { session }, error: exchangeError } = 
+    const { data: { session }, error: exchangeError } =
       await supabase.auth.exchangeCodeForSession(code)
-    
+
     if (exchangeError || !session) {
       console.error('Auth exchange error:', exchangeError)
-      return handleError('EXCHANGE_FAILED')
+      return handleError('EXCHANGE_FAILED', requestUrl)
     }
 
     // Always handle profile and role setup
@@ -112,7 +112,7 @@ export async function GET(request: NextRequest) {
     return response
   } catch (error) {
     console.error('OAuth callback error:', error)
-    return handleError('EXCHANGE_FAILED')
+    return handleError('EXCHANGE_FAILED', requestUrl)
   }
 }
 
@@ -140,8 +140,8 @@ async function handleProfileSetup(supabase: any, user: any) {
       id: user.id,
       user_id: user.id,
       full_name: user.user_metadata.full_name || user.user_metadata.name,
-      avatar_url: existingProfile?.avatar_url?.includes('Avatars') 
-        ? existingProfile.avatar_url 
+      avatar_url: existingProfile?.avatar_url?.includes('Avatars')
+        ? existingProfile.avatar_url
         : (user.user_metadata.avatar_url || user.user_metadata.picture),
       updated_at: new Date().toISOString()
     }, {

@@ -12,7 +12,7 @@ export async function getInviteDetails(token: string) {
       cookies: {
         // Using the new recommended cookie methods
         getAll: () => [],  // Return empty array as we don't need cookies for this query
-        setAll: () => {},  // No-op since we're not setting cookies
+        setAll: () => { },  // No-op since we're not setting cookies
       }
     }
   )

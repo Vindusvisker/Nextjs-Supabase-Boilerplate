@@ -69,7 +69,7 @@ export async function sendInviteEmail({
     const templateVars = {
       org_name: orgName,
       inviter_name: inviterName,
-      invite_url: `${APP_URL}/invite?token=${inviteUrl}`,
+      invite_url: inviteUrl.replace('http://localhost:3000/invite?token=', ''),
       expires_in: '48 hours'
     } satisfies TemplateVars['org-invite']
 

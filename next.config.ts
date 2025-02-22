@@ -10,6 +10,11 @@ const nextConfig = {
     }
   },
   
+  eslint: {
+    ignoreDuringBuilds: false,
+    dirs: ['src'],
+  },
+  
   webpack: (config: WebpackConfig) => {
     config.watchOptions = {
       poll: 1000,

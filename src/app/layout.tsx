@@ -37,7 +37,7 @@ export default function RootLayout({
         className={`${fontSans.variable} ${fontMono.variable} antialiased min-h-screen flex flex-col bg-background text-foreground`}
       >
         <TooltipProvider>
-          <ThemeProvider defaultTheme="default" defaultMode="system">
+          <ThemeProvider defaultTheme="default" defaultMode="dark">
             <Suspense
               fallback={
                 <div className="h-16 border-b border-border">

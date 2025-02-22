@@ -7,7 +7,7 @@ import { useMediaQuery } from '@/utils/useMediaQuery'
 export function ThemeProvider({ 
   children,
   defaultTheme = 'default',
-  defaultMode = 'system'
+  defaultMode = 'dark'
 }: { 
   children: React.ReactNode
   defaultTheme?: Theme
